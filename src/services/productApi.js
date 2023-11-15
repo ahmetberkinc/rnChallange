@@ -43,8 +43,6 @@ export async function removeFavProduct(product) {
       favProduct => favProduct.id !== product.id,
     );
 
-    console.log('updatedFavProducts', updatedFavProducts);
-
     await AsyncStorage.setItem(
       'favProducts',
       JSON.stringify(updatedFavProducts),

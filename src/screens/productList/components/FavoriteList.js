@@ -1,21 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Constants from '../../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import ColorContext from '../../../../colorContext';
 
 const FavoriteList = () => {
   const navigation = useNavigation();
+
+  const {heartColor} = useContext(ColorContext);
 
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('FavoriteList')}
       style={styles.favoriteContainer}>
-      <AntDesign
-        name={'heart'}
-        size={15}
-        color={Constants.DYNAMIC_HEART_COLOR}
-      />
+      <AntDesign name={'heart'} size={15} color={heartColor} />
       <Text style={styles.favoriteText}>Favorite List</Text>
     </TouchableOpacity>
   );

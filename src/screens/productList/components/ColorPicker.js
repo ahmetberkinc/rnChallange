@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Modal, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import WheelPicker from 'react-native-wheel-color-picker';
 import Constants from '../../../constants';
+import ColorContext from '../../../../colorContext';
 
 const ColorPicker = ({setColorPickerVisibility}) => {
-  const [selectedColor, setSelectedColor] = useState(
-    Constants.DYNAMIC_HEART_COLOR,
-  );
+  const [selectedColor, setSelectedColor] = useState(heartColor);
+
+  const {heartColor, setHeartColor} = useContext(ColorContext);
 
   return (
     <Modal>
@@ -18,8 +19,7 @@ const ColorPicker = ({setColorPickerVisibility}) => {
       />
       <TouchableOpacity
         onPress={() => {
-          (Constants.DYNAMIC_HEART_COLOR = selectedColor),
-            setColorPickerVisibility(false);
+          setHeartColor(selectedColor), setColorPickerVisibility(false);
         }}
         style={styles.containerColorSelect}>
         <Text style={styles.colorSelectText}>Select Color</Text>

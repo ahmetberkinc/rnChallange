@@ -1,52 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Constants from '../../../constants';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {
-  addFavProduct,
-  checkProductIsFav,
-  removeFavProduct,
-} from '../../../services/productApi';
-import {useIsFocused} from '@react-navigation/native';
-import {checkFirstTime} from '../../../../tootlip';
+import {useNavigation} from '@react-navigation/native';
+import Rating from './Rating';
+import FavoriteAction from './FavoriteAction';
 
-const ProductItem = ({product, setColorPickerVisibility}) => {
-  const [favoriteProduct, setFavoriteProduct] = useState(false);
-
+const ProductItem = ({product}) => {
   // This hook returns `true` if the screen is focused, `false` otherwise
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    isFocused &&
-      checkProductIsFav(product).then(isFav => setFavoriteProduct(isFav));
-  }, [isFocused]);
+  const navigation = useNavigation();
 
   const renderFavorite = () => {
-    return (
-      <TouchableOpacity
-        onLongPress={() => setColorPickerVisibility(true)}
-        onPress={() => {
-          setFavoriteProduct(!favoriteProduct),
-            favoriteProduct
-              ? removeFavProduct(product)
-              : (checkFirstTime(
-                  'HEART_COLOR_KEY',
-                  Constants.TOOLTIP_HEART_COLOR,
-                ),
-                addFavProduct(product));
-        }}
-        style={styles.favoriteContainer}>
-        <AntDesign
-          color={
-            favoriteProduct ? Constants.DYNAMIC_HEART_COLOR : Constants.BLACK
-          }
-          name={favoriteProduct ? 'heart' : 'hearto'}
-          size={20}
-        />
-      </TouchableOpacity>
-    );
+    return <FavoriteAction product={product} />;
   };
 
   const renderImage = () => {
@@ -71,57 +36,20 @@ const ProductItem = ({product, setColorPickerVisibility}) => {
           {product?.title}
         </Text>
         <Text numberOfLines={2}>{product?.description}</Text>
-        {renderRatings()}
-        <Text style={styles.price}>{product?.price} $</Text>
+        <Rating product={product} />
+        <Text style={styles.price}>$ {product?.price} </Text>
       </View>
     );
   };
-
-  const renderRatings = () => {
-    return (
-      <View style={{flexDirection: 'row'}}>
-        <FontAwesome
-          color={Constants.LIGHT_ORANGE}
-          name={findCorrectStarName(1)}
-          size={18}
-        />
-        <FontAwesome
-          color={Constants.LIGHT_ORANGE}
-          name={findCorrectStarName(2)}
-          size={18}
-        />
-        <FontAwesome
-          color={Constants.LIGHT_ORANGE}
-          name={findCorrectStarName(3)}
-          size={18}
-        />
-        <FontAwesome
-          color={Constants.LIGHT_ORANGE}
-          name={findCorrectStarName(4)}
-          size={18}
-        />
-        <FontAwesome
-          color={Constants.LIGHT_ORANGE}
-          name={findCorrectStarName(5)}
-          size={18}
-        />
-      </View>
-    );
-  };
-
-  function findCorrectStarName(starPosition) {
-    if (product?.rating > starPosition) {
-      return 'star';
-    } else if (starPosition - product?.rating < 0.5) {
-      return 'star-half-empty';
-    } else {
-      return 'star-o';
-    }
-  }
 
   return (
     <TouchableOpacity
-      style={[styles.productContainer, {marginRight: product.le}]}>
+      onPress={() =>
+        navigation.navigate('ProductDetail', {
+          product: product,
+        })
+      }
+      style={styles.productContainer}>
       {renderFavorite()}
       {renderImage()}
       {renderDetails()}
@@ -130,7 +58,6 @@ const ProductItem = ({product, setColorPickerVisibility}) => {
 };
 
 const styles = StyleSheet.create({
-  favoriteContainer: {alignSelf: 'flex-end', marginRight: 12, marginTop: 12},
   imageContainer: {justifyContent: 'center', alignItems: 'center'},
   detailContainer: {
     marginLeft: 5,
