@@ -11,8 +11,10 @@ class Constants {
   static LIGHT_ORANGE = '#FFAC1C';
   static BLACK = '#000000';
   static LIGHT_GRAY = '#D3D3D3';
-  //TODO: Store thic color with asyncstorage
-  static DYNAMIC_HEART_COLOR = '#FF0000';
+  static GRAY = '#808080';
+  static RED_ORANGE = '#FF0000';
+  static LIGHT_RED = '#FFB3B2';
+  static RED = '#FF0000';
 
   static TOOLTIP_HEART_COLOR =
     'You can choose the color you want by long pressing the heart icon.';
