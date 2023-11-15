@@ -1,15 +1,50 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Constants from '../../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {
+  addFavProduct,
+  checkProductIsFav,
+  removeFavProduct,
+} from '../../../services/productApi';
+import {useIsFocused} from '@react-navigation/native';
+import {checkFirstTime} from '../../../../tootlip';
 
-const ProductItem = ({product}) => {
+const ProductItem = ({product, setColorPickerVisibility}) => {
+  const [favoriteProduct, setFavoriteProduct] = useState(false);
+
+  // This hook returns `true` if the screen is focused, `false` otherwise
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    isFocused &&
+      checkProductIsFav(product).then(isFav => setFavoriteProduct(isFav));
+  }, [isFocused]);
+
   const renderFavorite = () => {
     return (
-      <TouchableOpacity style={styles.favoriteContainer}>
-        <AntDesign name={'hearto'} size={20} />
+      <TouchableOpacity
+        onLongPress={() => setColorPickerVisibility(true)}
+        onPress={() => {
+          setFavoriteProduct(!favoriteProduct),
+            favoriteProduct
+              ? removeFavProduct(product)
+              : (checkFirstTime(
+                  'HEART_COLOR_KEY',
+                  Constants.TOOLTIP_HEART_COLOR,
+                ),
+                addFavProduct(product));
+        }}
+        style={styles.favoriteContainer}>
+        <AntDesign
+          color={
+            favoriteProduct ? Constants.DYNAMIC_HEART_COLOR : Constants.BLACK
+          }
+          name={favoriteProduct ? 'heart' : 'hearto'}
+          size={20}
+        />
       </TouchableOpacity>
     );
   };

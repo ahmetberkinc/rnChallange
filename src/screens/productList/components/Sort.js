@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     marginVertical: 6,
-    marginLeft: 4,
+    marginLeft: 6,
   },
   sortText: {fontSize: 13, color: Constants.BLACK, marginLeft: 5},
   modalView: {
