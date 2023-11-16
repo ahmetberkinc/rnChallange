@@ -44,7 +44,7 @@ const ProductListContainer = () => {
       setDisplayedProducts(products);
     } else {
       setDisplayedProducts(
-        [...products].sort(function (a, b) {
+        [...displayedProducts].sort(function (a, b) {
           return sortOrder === 'Ascending'
             ? a[keyToSortBy] - b[keyToSortBy]
             : b[keyToSortBy] - a[keyToSortBy];

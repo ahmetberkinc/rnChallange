@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, FlatList} from 'react-native';
 import ProductItem from './components/ProductItem';
-import Constants from '../../constants';
 import SearchBar from './components/SearchBar';
 import Sort from './components/Sort';
 import Filter from './components/Filter';
 import FavoriteList from './components/FavoriteList';
 import EmptyFavList from '../favoriteList/components/EmptyFavList';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const ProductListView = ({
   products,
@@ -16,12 +16,19 @@ const ProductListView = ({
   onSortSelection,
   favoriteScreen,
 }) => {
+  const insets = useSafeAreaInsets();
+
   const renderItem = ({item}) => {
     return <ProductItem productList={products} product={item} />;
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: Constants.SILVER}}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top / 4,
+        paddingBottom: insets.bottom,
+      }}>
       <SearchBar onSearchTextInput={value => onSearchTextInput(value)} />
       <View style={{flexDirection: 'row'}}>
         <Sort onSortSelection={(key, order) => onSortSelection(key, order)} />

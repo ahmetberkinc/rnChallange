@@ -73,6 +73,5 @@ export async function checkProductIsFav(product) {
     return false;
   } catch (e) {
     // error reading value
-    console.log('e', e);
   }
 }

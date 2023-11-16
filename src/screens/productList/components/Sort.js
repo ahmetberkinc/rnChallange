@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
   },
   optionContainer: {
     marginLeft: 8,
-    justifyContent: 'center',
   },
   optionItem: {
     justifyContent: 'center',
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 16,
     fontWeight: '600',
-    marginVertical: 15,
+    marginVertical: 10,
   },
   clearTextContainer: {
     position: 'absolute',
