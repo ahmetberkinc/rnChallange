@@ -43,6 +43,7 @@ const ProductItem = ({product, productList}) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={1}
       onPress={() =>
         navigation.navigate('ProductDetail', {
           product: product,
