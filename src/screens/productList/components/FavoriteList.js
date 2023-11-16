@@ -3,12 +3,12 @@ import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Constants from '../../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
-import ColorContext from '../../../../colorContext';
+import MainContext from '../../../context/MainContext';
 
 const FavoriteList = () => {
   const navigation = useNavigation();
 
-  const {heartColor} = useContext(ColorContext);
+  const {heartColor} = useContext(MainContext);
 
   return (
     <TouchableOpacity

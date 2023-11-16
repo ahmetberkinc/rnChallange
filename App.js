@@ -7,7 +7,7 @@ import FavoriteListContainer from './src/screens/favoriteList/FavoriteListContai
 import Toast from 'react-native-toast-message';
 import Constants, {toastConfig} from './src/constants';
 import ProductDetailContainer from './src/screens/productDetail/ProductDetailContainer';
-import {ColorContextProvider} from './colorContext';
+import {MainContextProvider} from './src/context/MainContext';
 import HeaderLeftAction from './navigation/components/HeaderLeftAction';
 import BootSplash from 'react-native-bootsplash';
 import NetInfo from '@react-native-community/netinfo';
@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <ColorContextProvider>
+      <MainContextProvider>
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName={isConnected ? 'ProductList' : 'FavoriteList'}
@@ -74,7 +74,7 @@ const App = () => {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </ColorContextProvider>
+      </MainContextProvider>
       <Toast config={toastConfig} />
     </SafeAreaProvider>
   );

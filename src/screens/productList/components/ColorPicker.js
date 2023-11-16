@@ -2,12 +2,12 @@ import React, {useContext, useState} from 'react';
 import {Modal, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import WheelPicker from 'react-native-wheel-color-picker';
 import Constants from '../../../constants';
-import ColorContext from '../../../../colorContext';
+import MainContext from '../../../context/MainContext';
 
 const ColorPicker = ({setColorPickerVisibility}) => {
   const [selectedColor, setSelectedColor] = useState(heartColor);
 
-  const {heartColor, setHeartColor} = useContext(ColorContext);
+  const {heartColor, setHeartColor} = useContext(MainContext);
 
   return (
     <Modal>

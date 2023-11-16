@@ -8,36 +8,44 @@ import {
 import {checkFirstTime} from '../../../../tooltip';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Constants from '../../../constants';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useRoute} from '@react-navigation/native';
 import ColorPicker from './ColorPicker';
-import ColorContext from '../../../../colorContext';
+import MainContext from '../../../context/MainContext';
 
 const FavoriteAction = ({product}) => {
+  //Responsible for instant ui change
   const [isFavorite, setIsFavorite] = useState(false);
   const [colorPickerVisibility, setColorPickerVisibility] = useState(false);
 
-  const {heartColor} = useContext(ColorContext);
+  const {heartColor, updateToggle, setUpdateToggle} = useContext(MainContext);
 
   const isFocused = useIsFocused();
+  const route = useRoute();
 
+  //Used for displaying correct favorite status after navigation,goback()
   useEffect(() => {
     isFocused && checkProductIsFav(product).then(isFav => setIsFavorite(isFav));
   }, [isFocused]);
+
+  //If fav product marked as unfav context state switching and trigger updated favlist
+  //Also has tooltip usage
+  function onFavoriteIconPress() {
+    setIsFavorite(!isFavorite);
+    if (isFavorite) {
+      removeFavProduct(product).then(
+        () => route.name === 'FavoriteList' && setUpdateToggle(!updateToggle),
+      );
+    } else {
+      checkFirstTime('HEART_COLOR_KEY', Constants.TOOLTIP_HEART_COLOR),
+        addFavProduct(product);
+    }
+  }
 
   return (
     <View>
       <TouchableOpacity
         onLongPress={() => setColorPickerVisibility(true)}
-        onPress={() => {
-          setIsFavorite(!isFavorite),
-            isFavorite
-              ? removeFavProduct(product)
-              : (checkFirstTime(
-                  'HEART_COLOR_KEY',
-                  Constants.TOOLTIP_HEART_COLOR,
-                ),
-                addFavProduct(product));
-        }}
+        onPress={() => onFavoriteIconPress()}
         style={styles.favoriteContainer}>
         <AntDesign
           color={isFavorite ? heartColor : Constants.BLACK}

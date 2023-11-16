@@ -1,15 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ProductListView from '../productList/ProductListView';
 import {getFavProducts} from '../../services/productApi';
+import MainContext from '../../context/MainContext';
 
 const FavoriteListContainer = () => {
   //Store non filtered products
   const [products, setProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
 
+  const {updateToggle} = useContext(MainContext);
+
+  //Update data after removing item from favlist
   useEffect(() => {
     getAllFavProducts();
-  }, []);
+  }, [updateToggle]);
 
   //Get all products when page is render
   function getAllFavProducts() {
