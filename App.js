@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -10,14 +10,31 @@ import ProductDetailContainer from './src/screens/productDetail/ProductDetailCon
 import {ColorContextProvider} from './colorContext';
 import HeaderLeftAction from './navigation/components/HeaderLeftAction';
 import BootSplash from 'react-native-bootsplash';
+import NetInfo from '@react-native-community/netinfo';
+
 const App = () => {
   const Stack = createNativeStackNavigator();
+  const [isConnected, setIsConnected] = useState(true);
 
   //TODO: Change app icon
 
+  async function checkInternetConnection() {
+    return new Promise((resolve, reject) => {
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    });
+  }
+
   useEffect(() => {
     const init = async () => {
-      // …do multiple sync or async tasks
+      checkInternetConnection()
+        .then(() => setIsConnected(true))
+        .catch(() => setIsConnected(false));
     };
 
     init().finally(async () => {
@@ -31,6 +48,7 @@ const App = () => {
       <ColorContextProvider>
         <NavigationContainer>
           <Stack.Navigator
+            initialRouteName={isConnected ? 'ProductList' : 'FavoriteList'}
             screenOptions={{
               contentStyle: {
                 backgroundColor: Constants.DIRTY_WHITE,
@@ -44,7 +62,7 @@ const App = () => {
             <Stack.Screen
               name="FavoriteList"
               options={{
-                headerLeft: () => <HeaderLeftAction />,
+                headerLeft: () => isConnected && <HeaderLeftAction />,
               }}
               component={FavoriteListContainer}
             />

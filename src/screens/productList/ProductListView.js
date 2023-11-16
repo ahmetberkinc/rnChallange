@@ -18,6 +18,8 @@ const ProductListView = ({
     return <ProductItem productList={products} product={item} />;
   };
 
+  //TODO: Create empty list view
+
   return (
     <View style={{flex: 1, backgroundColor: Constants.SILVER}}>
       <SearchBar onSearchTextInput={value => onSearchTextInput(value)} />
