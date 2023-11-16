@@ -19,7 +19,6 @@ const FavoriteListContainer = () => {
     });
   }
 
-  //TODO: CHANGE SEARCH LOGIC
   //Display products with user input
   function onSearchTextInput(searchValue) {
     if (searchValue.length === 0) {

@@ -16,8 +16,6 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   const [isConnected, setIsConnected] = useState(true);
 
-  //TODO: Change app icon
-
   async function checkInternetConnection() {
     return new Promise((resolve, reject) => {
       NetInfo.fetch().then(state => {

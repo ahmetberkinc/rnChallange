@@ -7,8 +7,6 @@ const ProductDetailContainer = ({route}) => {
 
   const navigation = useNavigation();
 
-  //TODO: Add Header Navigation(Back Button)
-
   //To prevent edge cases(first and last item) infinite display approach applied
   const findCorrectIndex = selection => {
     if (selection === 'PREVIOUS') {

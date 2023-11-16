@@ -4,7 +4,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Constants from '../../../constants';
 
 const NavigationOptions = ({navigateNeighborProduct}) => {
-  //TODO: CHECK EDGE CASES
   const renderPreviousOption = () => {
     return (
       <TouchableOpacity
