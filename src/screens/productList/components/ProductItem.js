@@ -6,8 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import Rating from './Rating';
 import FavoriteAction from './FavoriteAction';
 
-const ProductItem = ({product}) => {
-  // This hook returns `true` if the screen is focused, `false` otherwise
+const ProductItem = ({product, productList}) => {
   const navigation = useNavigation();
 
   const renderFavorite = () => {
@@ -47,6 +46,7 @@ const ProductItem = ({product}) => {
       onPress={() =>
         navigation.navigate('ProductDetail', {
           product: product,
+          productList: productList,
         })
       }
       style={styles.productContainer}>

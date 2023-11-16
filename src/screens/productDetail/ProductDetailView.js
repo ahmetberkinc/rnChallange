@@ -1,16 +1,23 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Constants from '../../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Rating from '../productList/components/Rating';
 import FavoriteAction from '../productList/components/FavoriteAction';
+import ImageCarousel from './components/ImageCarousel';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import NavigationOptions from './components/NavigationOptions';
 
-const ProductDetailView = ({product}) => {
-  console.log('producta', product);
+const ProductDetailView = ({product, navigateNeighborProduct}) => {
+  const insets = useSafeAreaInsets();
 
   const renderFavoriteAction = () => {
-    return <FavoriteAction product={product} />;
+    return (
+      <View style={{marginBottom: 8}}>
+        <FavoriteAction product={product} />
+      </View>
+    );
   };
 
   const renderProductImage = () => {
@@ -78,15 +85,50 @@ const ProductDetailView = ({product}) => {
     );
   };
 
-  return (
-    <View>
-      {renderProductImage()}
-      <View style={{marginHorizontal: 6}}>
-        {renderFavoriteAction()}
+  const renderImageCarousel = () => {
+    return (
+      <View style={[styles.containerGroup, {marginBottom: 32}]}>
+        <View style={styles.containerGroupTitle}>
+          <Text style={styles.groupTitle}>Product Images</Text>
+        </View>
+        <ImageCarousel data={product?.images} />
+      </View>
+    );
+  };
+
+  const renderAllDetails = () => {
+    return (
+      <View style={styles.containerGroup}>
+        <View style={styles.containerGroupTitle}>
+          <Text style={styles.groupTitle}>Product Details</Text>
+        </View>
         {renderDetails()}
         {renderPriceAndStock()}
         {renderRating()}
       </View>
+    );
+  };
+
+  const renderNavigationOptions = () => {
+    return (
+      <NavigationOptions navigateNeighborProduct={navigateNeighborProduct} />
+    );
+  };
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top / 4,
+        paddingBottom: insets.bottom,
+      }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {renderFavoriteAction()}
+        {renderProductImage()}
+        {renderNavigationOptions()}
+        {renderAllDetails()}
+        {renderImageCarousel()}
+      </ScrollView>
     </View>
   );
 };
@@ -94,7 +136,27 @@ const ProductDetailView = ({product}) => {
 const styles = StyleSheet.create({
   containerBigImage: {
     width: Constants.SCREEN_WIDTH,
-    height: Constants.SCREEN_WIDTH,
+    height: 350,
+  },
+  containerGroup: {
+    backgroundColor: Constants.WHITE,
+    marginTop: 16,
+    width: '100%',
+    paddingLeft: 8,
+  },
+  containerGroupTitle: {
+    height: 50,
+    justifyContent: 'center',
+    borderBottomColor: Constants.LIGHT_GRAY,
+    borderTopColor: Constants.WHITE,
+    borderLeftColor: Constants.WHITE,
+    borderRightColor: Constants.WHITE,
+    borderWidth: 1,
+  },
+  groupTitle: {
+    color: Constants.GRAY,
+    fontSize: 15,
+    fontWeight: '600',
   },
   containerDetail: {
     flexDirection: 'row',
@@ -117,7 +179,7 @@ const styles = StyleSheet.create({
   },
   containerStock: {
     flexDirection: 'row',
-    marginBottom: 12,
+    marginBottom: 8,
     backgroundColor: Constants.LIGHT_RED,
     borderRadius: 10,
     padding: 2,
@@ -144,7 +206,7 @@ const styles = StyleSheet.create({
   },
   containerRating: {
     flexDirection: 'row',
-    marginTop: 8,
+    marginVertical: 8,
     alignItems: 'center',
   },
   rating: {color: Constants.BLACK, fontWeight: '600'},

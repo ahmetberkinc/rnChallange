@@ -15,7 +15,7 @@ const ProductListView = ({
   onSortSelection,
 }) => {
   const renderItem = ({item}) => {
-    return <ProductItem product={item} />;
+    return <ProductItem productList={products} product={item} />;
   };
 
   return (

@@ -7,6 +7,7 @@ class Constants {
 
   static SILVER = '#D3D3D3';
   static WHITE = '#FFFFFF';
+  static DIRTY_WHITE = '#EDE9E8';
   static ORANGE = '#FFA500';
   static LIGHT_ORANGE = '#FFAC1C';
   static BLACK = '#000000';
