@@ -59,6 +59,7 @@ const FavoriteListContainer = () => {
 
   return (
     <ProductListView
+      isFavorite
       products={products}
       displayedProducts={displayedProducts}
       onSearchTextInput={searchValue => onSearchTextInput(searchValue)}

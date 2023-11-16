@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar';
 import Sort from './components/Sort';
 import Filter from './components/Filter';
 import FavoriteList from './components/FavoriteList';
+import EmptyFavList from '../favoriteList/components/EmptyFavList';
 
 const ProductListView = ({
   products,
@@ -13,6 +14,7 @@ const ProductListView = ({
   onSearchTextInput,
   onFilterSelection,
   onSortSelection,
+  isFavorite,
 }) => {
   const renderItem = ({item}) => {
     return <ProductItem productList={products} product={item} />;
@@ -29,23 +31,27 @@ const ProductListView = ({
           onFilterSelection={key => onFilterSelection(key)}
           products={products}
         />
-        {/*TODO: Remove this at favoriteList Screen*/}
-        <FavoriteList />
+        {!isFavorite && <FavoriteList />}
       </View>
 
-      <FlatList
-        style={{
-          marginHorizontal: 6,
-        }}
-        numColumns={2}
-        data={displayedProducts}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        columnWrapperStyle={{
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      />
+      {isFavorite && displayedProducts.length === 0 ? (
+        <EmptyFavList />
+      ) : (
+        <FlatList
+          style={{
+            marginHorizontal: 6,
+          }}
+          numColumns={2}
+          data={displayedProducts}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </View>
   );
 };

@@ -17,8 +17,11 @@ class Constants {
   static LIGHT_RED = '#FFB3B2';
   static RED = '#FF0000';
 
+  //BETTER WAY USE LOCALIZATION
   static TOOLTIP_HEART_COLOR =
     'You can choose the color you want by long pressing the heart icon.';
+  static EMPTY_FAV_LIST_INFO =
+    'There is no product in your favorite list. You can add products to the favorite list by pressing the heart icon on the products.';
 }
 
 export const toastConfig = {
