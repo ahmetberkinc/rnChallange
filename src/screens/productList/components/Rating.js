@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../../constants';
 
@@ -15,7 +15,7 @@ const Rating = ({product}) => {
   }
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <FontAwesome
         color={Constants.LIGHT_ORANGE}
         name={findCorrectStarName(1)}
@@ -41,8 +41,13 @@ const Rating = ({product}) => {
         name={findCorrectStarName(5)}
         size={18}
       />
+      <Text style={styles.rating}>{(product?.rating).toFixed(1)}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  rating: {color: Constants.BLACK, fontWeight: '500', marginLeft: 6},
+});
 
 export default Rating;

@@ -34,7 +34,7 @@ const ProductItem = ({product, productList}) => {
         <Text numberOfLines={2} style={styles.title}>
           {product?.title}
         </Text>
-        <Text numberOfLines={2}>{product?.description}</Text>
+        <Text numberOfLines={1}>{product?.description}</Text>
         <Rating product={product} />
         <Text style={styles.price}>$ {product?.price} </Text>
       </View>

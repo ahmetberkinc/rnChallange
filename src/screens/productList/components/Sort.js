@@ -7,7 +7,62 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 const Sort = ({onSortSelection}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  //TODO SHOW USER SELECTED SORT OPTION ADD NEW STATE
+  const [selectedSortOption, setSelectedSortOption] = useState({
+    name: 'Suggested',
+    type: 'default',
+    order: '',
+  });
+
+  const sortOptions = [
+    {name: 'Suggested', type: 'default', order: ''},
+    {
+      name: 'Ascending Price',
+      type: 'price',
+      order: 'Ascending',
+    },
+    {
+      name: 'Descending Price',
+      type: 'price',
+      order: 'Descending',
+    },
+    {
+      name: 'Ascending Rating',
+      type: 'rating',
+      order: 'Ascending',
+    },
+    {
+      name: 'Descending Rating',
+      type: 'rating',
+      order: 'Descending',
+    },
+  ];
+
+  const renderSortOptions = sortOptions.map((sortOption, index) => {
+    return (
+      <View key={index} style={styles.optionContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(false),
+              setSelectedSortOption(sortOption),
+              onSortSelection(sortOption.type, sortOption.order);
+          }}
+          style={styles.optionItem}>
+          <Text
+            style={[
+              styles.optionText,
+              {
+                color:
+                  selectedSortOption.name === sortOption.name
+                    ? Constants.RED
+                    : Constants.BLACK,
+              },
+            ]}>
+            {sortOption.name}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  });
 
   return (
     <TouchableOpacity
@@ -23,6 +78,15 @@ const Sort = ({onSortSelection}) => {
           }}>
           <TouchableOpacity activeOpacity={1} style={styles.modalView}>
             <View style={styles.titleContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(false),
+                    setSelectedSortOption('Suggested'),
+                    onSortSelection('default');
+                }}
+                style={styles.clearTextContainer}>
+                <Text style={styles.clearText}>Clear</Text>
+              </TouchableOpacity>
               <Text style={styles.modalTitle}>Sort By</Text>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
@@ -30,22 +94,7 @@ const Sort = ({onSortSelection}) => {
                 <AntDesign name={'close'} size={30} />
               </TouchableOpacity>
             </View>
-            <View style={styles.optionContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(false), onSortSelection('price');
-                }}
-                style={styles.optionItem}>
-                <Text style={styles.optionText}>Price</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(false), onSortSelection('rating');
-                }}
-                style={styles.optionItem}>
-                <Text style={styles.optionText}>Rating</Text>
-              </TouchableOpacity>
-            </View>
+            <View style={styles.optionContainer}>{renderSortOptions}</View>
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
@@ -90,9 +139,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   optionContainer: {
-    marginLeft: 10,
+    marginLeft: 8,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   optionItem: {
     justifyContent: 'center',
@@ -100,8 +148,16 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 16,
     fontWeight: '600',
-    color: Constants.BLACK,
     marginVertical: 15,
+  },
+  clearTextContainer: {
+    position: 'absolute',
+    left: 10,
+  },
+  clearText: {
+    fontSize: 18,
+    color: Constants.ORANGE,
+    fontWeight: '600',
   },
 });
 

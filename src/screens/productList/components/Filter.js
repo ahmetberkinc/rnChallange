@@ -13,6 +13,7 @@ import Constants from '../../../constants';
 const Filter = ({products, onFilterSelection}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [brandList, setBrandList] = useState([]);
+  const [selectedFilterOption, setSelectedFilterOption] = useState('ALL');
 
   function getBrandList() {
     setBrandList([...new Set(products.map(product => product.brand))]);
@@ -24,10 +25,23 @@ const Filter = ({products, onFilterSelection}) => {
         <TouchableOpacity
           key={index}
           onPress={() => {
-            setModalVisible(false), onFilterSelection(brand);
+            setModalVisible(false),
+              setSelectedFilterOption(brand),
+              onFilterSelection(brand);
           }}
           style={styles.brandItemContainer}>
-          <Text style={styles.brandItemText}>{brand}</Text>
+          <Text
+            style={[
+              styles.brandItemText,
+              {
+                color:
+                  selectedFilterOption === brand
+                    ? Constants.RED
+                    : Constants.BLACK,
+              },
+            ]}>
+            {brand}
+          </Text>
         </TouchableOpacity>
       );
     });
@@ -52,7 +66,9 @@ const Filter = ({products, onFilterSelection}) => {
               <Text style={styles.modalTitle}>Filter By</Text>
               <TouchableOpacity
                 onPress={() => {
-                  setModalVisible(false), onFilterSelection('ALL');
+                  setModalVisible(false),
+                    setSelectedFilterOption('ALL'),
+                    onFilterSelection('ALL');
                 }}
                 style={styles.clearTextContainer}>
                 <Text style={styles.clearText}>Clear</Text>
@@ -63,7 +79,11 @@ const Filter = ({products, onFilterSelection}) => {
                 <AntDesign name={'close'} size={30} />
               </TouchableOpacity>
             </View>
-            <ScrollView style={{height: 250}}>{renderBrandList()}</ScrollView>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{height: 250}}>
+              {renderBrandList()}
+            </ScrollView>
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
@@ -110,12 +130,11 @@ const styles = StyleSheet.create({
   brandItemContainer: {
     height: 30,
     justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 8,
   },
   brandItemText: {
     fontSize: 16,
     fontWeight: '600',
-    color: Constants.BLACK,
   },
   clearTextContainer: {
     position: 'absolute',

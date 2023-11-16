@@ -7,6 +7,9 @@ const ProductListContainer = () => {
   const [products, setProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
 
+  //Meaning of this state is showing correct products after
+  //Filter -> Select a Brand -> Sort -> Suggested flow
+
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -36,12 +39,18 @@ const ProductListContainer = () => {
   }
 
   //Sort products with user sort option
-  function sortProducts(keyToSortBy) {
-    setDisplayedProducts(
-      [...displayedProducts].sort(function (a, b) {
-        return a[keyToSortBy] - b[keyToSortBy];
-      }),
-    );
+  function sortProducts(keyToSortBy, sortOrder) {
+    if (keyToSortBy === 'default') {
+      setDisplayedProducts(products);
+    } else {
+      setDisplayedProducts(
+        [...products].sort(function (a, b) {
+          return sortOrder === 'Ascending'
+            ? a[keyToSortBy] - b[keyToSortBy]
+            : b[keyToSortBy] - a[keyToSortBy];
+        }),
+      );
+    }
   }
 
   //Filter products with user brand filter option
@@ -62,7 +71,7 @@ const ProductListContainer = () => {
       products={products}
       displayedProducts={displayedProducts}
       onSearchTextInput={searchValue => onSearchTextInput(searchValue)}
-      onSortSelection={sortKey => sortProducts(sortKey)}
+      onSortSelection={(sortKey, sortOrder) => sortProducts(sortKey, sortOrder)}
       onFilterSelection={filterKey => filterProducts(filterKey)}
     />
   );

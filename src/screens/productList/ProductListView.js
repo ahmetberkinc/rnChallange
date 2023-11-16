@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, FlatList} from 'react-native';
 import ProductItem from './components/ProductItem';
 import Constants from '../../constants';
@@ -24,7 +24,7 @@ const ProductListView = ({
     <View style={{flex: 1, backgroundColor: Constants.SILVER}}>
       <SearchBar onSearchTextInput={value => onSearchTextInput(value)} />
       <View style={{flexDirection: 'row'}}>
-        <Sort onSortSelection={key => onSortSelection(key)} />
+        <Sort onSortSelection={(key, order) => onSortSelection(key, order)} />
         <Filter
           onFilterSelection={key => onFilterSelection(key)}
           products={products}

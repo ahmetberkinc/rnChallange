@@ -77,10 +77,7 @@ const ProductDetailView = ({product, navigateNeighborProduct}) => {
   const renderRating = () => {
     return (
       <View style={styles.containerRating}>
-        <Text style={styles.rating}>{(product?.rating).toFixed(1)}</Text>
-        <View style={{marginLeft: 6}}>
-          <Rating product={product} />
-        </View>
+        <Rating product={product} />
       </View>
     );
   };
@@ -209,7 +206,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
   },
-  rating: {color: Constants.BLACK, fontWeight: '600'},
 });
 
 export default ProductDetailView;
