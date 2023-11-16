@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -9,8 +9,22 @@ import Constants, {toastConfig} from './src/constants';
 import ProductDetailContainer from './src/screens/productDetail/ProductDetailContainer';
 import {ColorContextProvider} from './colorContext';
 import HeaderLeftAction from './navigation/components/HeaderLeftAction';
+import BootSplash from 'react-native-bootsplash';
 const App = () => {
   const Stack = createNativeStackNavigator();
+
+  //TODO: Change app icon
+
+  useEffect(() => {
+    const init = async () => {
+      // …do multiple sync or async tasks
+    };
+
+    init().finally(async () => {
+      await BootSplash.hide({fade: true});
+      console.log('BootSplash has been hidden successfully');
+    });
+  }, []);
 
   return (
     <SafeAreaProvider>
@@ -29,9 +43,9 @@ const App = () => {
             />
             <Stack.Screen
               name="FavoriteList"
-              options={({route}) => ({
+              options={{
                 headerLeft: () => <HeaderLeftAction />,
-              })}
+              }}
               component={FavoriteListContainer}
             />
             <Stack.Screen
