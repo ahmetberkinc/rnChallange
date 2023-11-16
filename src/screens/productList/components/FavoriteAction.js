@@ -13,7 +13,7 @@ import ColorPicker from './ColorPicker';
 import ColorContext from '../../../../colorContext';
 
 const FavoriteAction = ({product}) => {
-  const [favoriteProduct, setFavoriteProduct] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [colorPickerVisibility, setColorPickerVisibility] = useState(false);
 
   const {heartColor} = useContext(ColorContext);
@@ -21,8 +21,7 @@ const FavoriteAction = ({product}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    isFocused &&
-      checkProductIsFav(product).then(isFav => setFavoriteProduct(isFav));
+    isFocused && checkProductIsFav(product).then(isFav => setIsFavorite(isFav));
   }, [isFocused]);
 
   return (
@@ -30,8 +29,8 @@ const FavoriteAction = ({product}) => {
       <TouchableOpacity
         onLongPress={() => setColorPickerVisibility(true)}
         onPress={() => {
-          setFavoriteProduct(!favoriteProduct),
-            favoriteProduct
+          setIsFavorite(!isFavorite),
+            isFavorite
               ? removeFavProduct(product)
               : (checkFirstTime(
                   'HEART_COLOR_KEY',
@@ -41,8 +40,8 @@ const FavoriteAction = ({product}) => {
         }}
         style={styles.favoriteContainer}>
         <AntDesign
-          color={favoriteProduct ? heartColor : Constants.BLACK}
-          name={favoriteProduct ? 'heart' : 'hearto'}
+          color={isFavorite ? heartColor : Constants.BLACK}
+          name={isFavorite ? 'heart' : 'hearto'}
           size={20}
         />
       </TouchableOpacity>

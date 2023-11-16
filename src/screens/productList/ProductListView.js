@@ -14,7 +14,7 @@ const ProductListView = ({
   onSearchTextInput,
   onFilterSelection,
   onSortSelection,
-  isFavorite,
+  favoriteScreen,
 }) => {
   const renderItem = ({item}) => {
     return <ProductItem productList={products} product={item} />;
@@ -31,10 +31,10 @@ const ProductListView = ({
           onFilterSelection={key => onFilterSelection(key)}
           products={products}
         />
-        {!isFavorite && <FavoriteList />}
+        {!favoriteScreen && <FavoriteList />}
       </View>
 
-      {isFavorite && displayedProducts.length === 0 ? (
+      {favoriteScreen && displayedProducts.length === 0 ? (
         <EmptyFavList />
       ) : (
         <FlatList
