@@ -55,6 +55,9 @@ const ProductListView = ({
             alignItems: 'center',
           }}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: 32,
+          }}
         />
       )}
     </View>
